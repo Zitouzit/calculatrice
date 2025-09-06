@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 6 - Calculateur de prêt hypothécaire</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; text-align: center; 
+            background: linear-gradient(135deg, #30e374 0%, #4387e7 100%);
+            line-height: 1.6;
+            min-height: 100vh;
+            color: #0b0a0b;
+            padding: 20%;
+            justify-content: center;}
+        button {
+            background: linear-gradient(to right, #d688c9, #6ad4e2);
+            color: #282b26;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+        h1 {
+            color: #644f4f;
+            margin-bottom: 10px; }
+        p { margin: 10px 0; }
+         button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        input { font-size: 24px; text-align: center; margin: 20px 0; padding: 10px; }
+        .form-group { margin: 15px 0; }
+        label { display: inline-block; width: 200px;margin-bottom: 8px; font-weight: 600; color: rgb(21, 22, 22); }
+        input { padding: 5px; }
+        
+        .result {
+            padding: 20px;
+            background-color: #a6f7e6;
+            border-radius: 8px;
+            border-left: 4px solid #7ef6ea;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculateur de prêt hypothécaire</h1>
+    
+    <div class="form-group">
+        <label for="loanAmount">Montant du prêt :</label>
+        <input type="number" id="loanAmount" min="1">
+    </div>
+    
+    <div class="form-group">
+        <label for="interestRate">Taux d'intérêt annuel (%):</label>
+        <input type="number" id="interestRate" min="0.01" step="0.01">
+    </div>
+    
+    <div class="form-group">
+        <label for="loanTerm">Durée (années):</label>
+        <input type="number" id="loanTerm" min="1">
+    </div>
+    
+    <button onclick="calculateMortgage()">Calculer la mensualité</button>
+    
+    <div class="result" id="monthlyPayment">Mensualité: </div>
+
+    <script>
+        function calculateMortgage() {
+            // Récupération des valeurs
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const annualInterestRate = parseFloat(document.getElementById('interestRate').value);
+            const loanTermYears = parseInt(document.getElementById('loanTerm').value);
+            
+            // Validation des données
+            if (isNaN(loanAmount) || loanAmount <= 0) {
+                alert("Veuillez entrer un montant de prêt valide et positif");
+                return;
+            }
+            
+            if (isNaN(annualInterestRate) || annualInterestRate <= 0) {
+                alert("Veuillez entrer un taux d'intérêt valide et positif");
+                return;
+            }
+            
+            if (isNaN(loanTermYears) || loanTermYears <= 0) {alert("Veuillez entrer une durée de prêt valide et positive");
+                return;
+            }
+            
+            // Calculs
+            const monthlyInterestRate = (annualInterestRate / 100) / 12;
+            const numberOfPayments = loanTermYears * 12;
+            
+            
+            const monthlyPayment = loanAmount * 
+                (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / 
+                (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+            
+            // Affichage du résultat
+            document.getElementById('monthlyPayment').textContent = 
+                Mensualité = `${monthlyPayment.toFixed(2)} €`;
+        }
+    </script>
+</body>
+</html>
